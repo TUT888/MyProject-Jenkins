@@ -13,9 +13,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build automation in progress with $BUILD_AUTOMATION_TOOL..."
+                bat "docker build -t art_supply_store"
             }
         }
-        stage('Unit and Integration Tests') {
+        stage('Tests') {
             steps {
                 echo "Running unit tests with $TEST_AUTOMATION_TOOL..."
                 echo "Running integration with $TEST_AUTOMATION_TOOL..."
@@ -44,42 +45,52 @@ pipeline {
                 echo "Analysing code with $CODE_ANALYSIS_TOOL"
             }
         }
-        stage('Security Scan') {
-            steps {
-                echo "Security scanning with $SECURITY_SCAN_TOOL..."
-            }
-            post{
-                success{
-                    emailext (
-                        to: "tamtat192@gmail.com",
-                        subject: "Email notification from Jenkins: Security Scan status - SUCCESS",
-                        body: "The Security Scan stage was completed successfully! Please find the attached build log below.",
-                        attachLog: true
-                    )
-                }
-                failure{
-                    emailext (
-                        to: "tamtat192@gmail.com",
-                        subject: "Email notification from Jenkins: Security Scan status - FAILURE",
-                        body: "The Security Scan stage was failed ! Please find the attached build log below.",
-                        attachLog: true
-                    )
-                }
-            }
-        }
-        stage('Deploy to Staging') {
+        // stage('Security Scan') {
+        //     steps {
+        //         echo "Security scanning with $SECURITY_SCAN_TOOL..."
+        //     }
+        //     post{
+        //         success{
+        //             emailext (
+        //                 to: "tamtat192@gmail.com",
+        //                 subject: "Email notification from Jenkins: Security Scan status - SUCCESS",
+        //                 body: "The Security Scan stage was completed successfully! Please find the attached build log below.",
+        //                 attachLog: true
+        //             )
+        //         }
+        //         failure{
+        //             emailext (
+        //                 to: "tamtat192@gmail.com",
+        //                 subject: "Email notification from Jenkins: Security Scan status - FAILURE",
+        //                 body: "The Security Scan stage was failed ! Please find the attached build log below.",
+        //                 attachLog: true
+        //             )
+        //         }
+        //     }
+        // }
+        stage('Deploy') {
             steps {
                 echo "Deploying application to $STAGING_SERVER staging server..."
             }
         }
-        stage('Integration Tests on Staging') {
+        // stage('Integration Tests on Staging') {
+        //     steps {
+        //         echo "Running integration test on $STAGING_ENVIRONMENT staging environment..."
+        //     }
+        // }
+        // stage('Deploy to Production') {
+        //     steps {
+        //         echo "Deploying to $PRODUCTION_SERVER production environment..."
+        //     }
+        // }
+        stage('Release') {
             steps {
-                echo "Running integration test on $STAGING_ENVIRONMENT staging environment..."
+                echo "Releasing application."
             }
         }
-        stage('Deploy to Production') {
+        stage('Monitoring and Alerting') {
             steps {
-                echo "Deploying to $PRODUCTION_SERVER production environment..."
+                echo "Monitoring and Alerting stage."
             }
         }
     }
