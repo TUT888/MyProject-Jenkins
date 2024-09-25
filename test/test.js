@@ -10,6 +10,10 @@ describe("Add Two Numbers", function () {
             done()
         });
     });
+});
+
+describe("Sub Two Numbers", function () {
+    var url = "http://localhost:3040";
     it("Should return 3 if we request result for 15 - 12", function (done) {
         request(`${url}/subTwoNumber?n1=15&n2=12`, function (error, response, body) {
             let result = JSON.parse(response.body);
@@ -17,6 +21,9 @@ describe("Add Two Numbers", function () {
             done()
         });
     });
+});
+
+describe("Mul Two Numbers", function () {
     it("Should return 10 if we request result for 2 * 5", function (done) {
         request(`${url}/mulTwoNumber?n1=2&n2=5`, function (error, response, body) {
             let result = JSON.parse(response.body);
@@ -24,6 +31,9 @@ describe("Add Two Numbers", function () {
             done()
         });
     });
+});
+
+describe("Div Two Numbers", function () {
     it("Should return 2 if we request result for 10 / 5", function (done) {
         request(`${url}/divTwoNumber?n1=10&n2=5`, function (error, response, body) {
             let result = JSON.parse(response.body);

@@ -1,13 +1,10 @@
 pipeline {
     agent any
     environment {
+        NOTIFICATION_EMAIL = 'tamtat192@gmail.com'
         BUILD_TOOL = 'Docker'
         TEST_TOOL = 'Mocha'
         CODE_ANALYSIS_TOOL = 'SonarQube'
-        SECURITY_SCAN_TOOL = 'Astra'
-        STAGING_SERVER = 'AWS EC2'
-        STAGING_ENVIRONMENT = 'AWS EC2'
-        PRODUCTION_SERVER = 'AWS EC2'
     }
     stages {
         stage('Build') {
@@ -37,21 +34,21 @@ pipeline {
             post {
                 success {
                     echo "Test successfully!"
-                    // emailext (
-                    //     to: "tamtat192@gmail.com",
-                    //     subject: "Email notification from Jenkins: Testing Phase - SUCCESS",
-                    //     body: "The testing phase was completed successfully with Moca! Please find the attached build log below.",
-                    //     attachLog: true
-                    // )
+                    emailext (
+                        to: "$NOTIFICATION_EMAIL",
+                        subject: "Email notification from Jenkins: Unit Tests status - SUCCESS",
+                        body: "The testing phase was completed successfully with Moca! Please find the attached build log below.",
+                        attachLog: true
+                    )
                 }
                 failure {
                     echo "Test failed!"
-                    // emailext (
-                    //     to: "tamtat192@gmail.com",
-                    //     subject: "Email notification from Jenkins: Unit and Integration Tests status - FAILURE",
-                    //     body: "The Unit and Integration Tests stage was failed ! Please find the attached build log below.",
-                    //     attachLog: true
-                    // )
+                    emailext (
+                        to: "$NOTIFICATION_EMAIL",
+                        subject: "Email notification from Jenkins: Unit Tests status - FAILURE",
+                        body: "The testing phase was completed successfully with Moca! Please find the attached build log below.",
+                        attachLog: true
+                    )
                 }
             }
         }
