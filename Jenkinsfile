@@ -32,7 +32,6 @@ pipeline {
 
                 // Testing with Mocha, "mocha --reporter spec"
                 bat "npm install"
-                bat "npm run start"
                 bat "npm run test"
             }
             post {
