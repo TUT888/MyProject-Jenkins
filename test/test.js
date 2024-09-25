@@ -2,40 +2,33 @@ var expect = require("chai").expect;
 var request = require("request");
 
 describe("Add Two Numbers", function () {
-    var url = "http://localhost:3000/categories";
-    it("returns status 200 to check if api works", function (done) {
-        request(url, function (error, response, body) {
-            console.log(response);
-            expect(response.statusCode).to.equal(200);
+    var url = "http://localhost:3040";
+    it("Should return 8 if we request result for 3 + 5", function (done) {
+        request(`${url}/addTwoNumber?n1=3&n2=5`, function (error, response, body) {
+            let result = JSON.parse(response.body);
+            expect(result.data).equal(8);
             done()
         });
     });
-    // it("returns statusCode key in body to check if api give right result should be 200", function (done) {
-    //     request(url, function (error, response, body) {
-    //         body = JSON.parse(body)
-    //         expect(body.statusCode).to.equal(200);
-    //         done()
-    //     });
-    // });
-    // it("returns the result as number", function (done) {
-    //     request(url, function (error, response, body) {
-    //         body = JSON.parse(body)
-    //         expect(body.result).to.be.a('number');
-    //         done()
-    //     });
-    // });
-    // it("returns the result equal to 8", function (done) {
-    //     request(url, function (error, response, body) {
-    //         body = JSON.parse(body)
-    //         expect(body.result).to.equal(8);
-    //         done()
-    //     });
-    // });
-    // it("returns the result not equal to 15", function (done) {
-    //     request(url, function (error, response, body) {
-    //         body = JSON.parse(body);
-    //         expect(body.result).to.not.equal(15);
-    //         done()
-    //     });
-    // });
+    it("Should return 3 if we request result for 15 - 12", function (done) {
+        request(`${url}/subTwoNumber?n1=15&n2=12`, function (error, response, body) {
+            let result = JSON.parse(response.body);
+            expect(result.data).equal(3);
+            done()
+        });
+    });
+    it("Should return 10 if we request result for 2 * 5", function (done) {
+        request(`${url}/mulTwoNumber?n1=2&n2=5`, function (error, response, body) {
+            let result = JSON.parse(response.body);
+            expect(result.data).equal(10);
+            done()
+        });
+    });
+    it("Should return 2 if we request result for 10 / 5", function (done) {
+        request(`${url}/divTwoNumber?n1=10&n2=5`, function (error, response, body) {
+            let result = JSON.parse(response.body);
+            expect(result.data).equal(2);
+            done()
+        });
+    });
 });
