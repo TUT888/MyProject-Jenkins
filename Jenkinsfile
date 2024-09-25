@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build automation in progress with $BUILD_AUTOMATION_TOOL..."
-                bat "docker build -t art_supply_store"
+                bat "docker build -t art_supply_store ."
             }
         }
         stage('Tests') {
