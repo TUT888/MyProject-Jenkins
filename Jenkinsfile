@@ -67,6 +67,26 @@ pipeline {
                     }
                 }
             }
+            post {
+                success {
+                    echo "Analyse code successfully!"
+                    emailext (
+                        to: "$NOTIFICATION_EMAIL",
+                        subject: "Email notification from Jenkins: Code Analysis status - SUCCESS",
+                        body: "The code analysis phase was completed successfully with SonarQube! Please find the attached build log below.",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    echo "Analyse code failed!"
+                    emailext (
+                        to: "$NOTIFICATION_EMAIL",
+                        subject: "Email notification from Jenkins: Code Analysis status - FAILURE",
+                        body: "The code analysis phase was failed with SonarQube! Please find the attached build log below.",
+                        attachLog: true
+                    )
+                }
+            }
         }
         stage ('Deploy') {
             steps {
