@@ -44,7 +44,7 @@ pipeline {
             steps {
                 echo "Analysing code with $CODE_ANALYSIS_TOOL"
                 script {
-                    def scannerHome = tool 'SonarQubeAnalysis' // Use 'SonarQubeAnalysis'
+                    def scannerHome = tool 'SonarQubeScanner6.2' // Use 'SonarQubeAnalysis'
 
                     withSonarQubeEnv('SonarQubeAnalysis') {  // 'SonarCloud' is the name of your SonarQube installation in Jenkins
                         bat "${scannerHome}/bin/sonar-scanner"
