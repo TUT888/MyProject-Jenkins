@@ -43,6 +43,13 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo "Analysing code with $CODE_ANALYSIS_TOOL"
+                script {
+                    def scannerHome = tool 'SonarQubeAnalysis' // Use 'SonarQubeAnalysis'
+
+                    withSonarQubeEnv('SonarCloud') {  // 'SonarCloud' is the name of your SonarQube installation in Jenkins
+                        bat "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
             }
         }
         // stage('Security Scan') {
